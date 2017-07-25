@@ -1,5 +1,26 @@
 var selectors = ['.Ct', '.comment-renderer-text-content', 'yt-formatted-string.content-text'];
 
+const levelsOfIndentation = 3;
+
+const authorImageUrlSel = 'yt-thumb-clip';
+const authorNameSel = 'comment-author-text g-hovercard';
+const commentTextSel = '.comment-renderer-text-content';
+const commentUrlSel = '.comment-renderer-time';
+// const videoTitle = document.getElementById('eow-title').innerHTML;
+// const videoUrl = getVideoID();
+//
+// function getVideoID() {
+// var video_id = window.location.search.split('v=')[1];
+// var ampersandPosition = video_id.indexOf('&');
+// if(ampersandPosition != -1) {
+//   video_id = video_id.substring(0, ampersandPosition);
+//   return video_id
+// }
+// }
+
+// console.log(videoUrl)
+// console.log(videoTitle)
+
 
 // adds button
 var addButton = function(comment) {
@@ -36,6 +57,18 @@ setInterval(function() {
 
 function handler() {
 	console.log("CLICKED")
-  console.log(this.parentElement.children)
-  console.log(this.parentElement.children[0].innerHTML)
+  var overallCommentParent = getXthParentElement(this, levelsOfIndentation);
+  var commentText = overallCommentParent.querySelector(commentTextSel).innerHTML
+  var commentUrl = overallCommentParent.querySelector(commentUrlSel).children[0].getAttribute("href");
+  console.log(commentUrl)
+  console.log(commentText)
+}
+
+function getXthParentElement(child, x) {
+for (var i = 0; i<x; i++) {
+  child = child.parentElement;
+  //console.log(child)
+
+}
+return child
 }
