@@ -2,39 +2,24 @@ var selectors = ['.Ct', '.comment-renderer-text-content', 'yt-formatted-string.c
 
 const levelsOfIndentation = 3;
 
-const authorImageUrlSel = 'yt-thumb-clip';
-const authorNameSel = 'comment-author-text g-hovercard';
+const authorImageUrlSel = '.yt-thumb-clip';
+const authorNameSel = '.comment-author-text';
 const commentTextSel = '.comment-renderer-text-content';
 const commentUrlSel = '.comment-renderer-time';
-// const videoTitle = document.getElementById('eow-title').innerHTML;
-// const videoUrl = getVideoID();
-//
-// function getVideoID() {
-// var video_id = window.location.search.split('v=')[1];
-// var ampersandPosition = video_id.indexOf('&');
-// if(ampersandPosition != -1) {
-//   video_id = video_id.substring(0, ampersandPosition);
-//   return video_id
-// }
-// }
-
-// console.log(videoUrl)
-// console.log(videoTitle)
-
 
 // adds button
 var addButton = function(comment) {
 
-    parent = comment.parentElement;
+  parent = comment.parentElement;
 
-    next = parent.nextSibling,
+  next = parent.nextSibling,
     button = document.createElement("button");
-    button.className = "button";
-    text = document.createTextNode("save");
-    button.appendChild(text);
-    parent.appendChild(button);
+  button.className = "button";
+  text = document.createTextNode("save");
+  button.appendChild(text);
+  parent.appendChild(button);
 
-    comment.classList.add('buttoned');
+  comment.classList.add('buttoned');
 
 }
 
@@ -56,19 +41,43 @@ setInterval(function() {
 }, 100);
 
 function handler() {
-	console.log("CLICKED")
+
   var overallCommentParent = getXthParentElement(this, levelsOfIndentation);
-  var commentText = overallCommentParent.querySelector(commentTextSel).innerHTML
-  var commentUrl = overallCommentParent.querySelector(commentUrlSel).children[0].getAttribute("href");
-  console.log(commentUrl)
-  console.log(commentText)
+  var comment = {}
+  comment.text = overallCommentParent.querySelector(commentTextSel).innerHTML;
+  comment.url = overallCommentParent.querySelector(commentUrlSel).children[0].getAttribute("href");
+  comment.author = overallCommentParent.querySelector(authorNameSel).innerHTML
+  comment.authorImg = overallCommentParent.querySelector(authorImageUrlSel).children[0].getAttribute("src");
+  comment.videoTitle = document.getElementById('eow-title').getAttribute("title");
+  comment.videoID = getVideoID();
+
+  chrome.storage.sync.get('comments', function(commentArray) {
+
+    commentArray.comments.push(comment)
+    chrome.storage.sync.set({
+      comments: commentArray.comments
+    }, function() {
+      console.log("Sucess!")
+    });
+  });
+
 }
 
 function getXthParentElement(child, x) {
-for (var i = 0; i<x; i++) {
-  child = child.parentElement;
-  //console.log(child)
-
+  for (var i = 0; i < x; i++) {
+    child = child.parentElement;
+  }
+  return child
 }
-return child
+
+
+function getVideoID() {
+  var video_id = window.location.search.split('v=')[1];
+  console.log(video_id)
+  var ampersandPosition = video_id.indexOf('&');
+  if (ampersandPosition != -1) {
+    video_id = video_id.substring(0, ampersandPosition);
+    return video_id;
+  }
+  return video_id;
 }
