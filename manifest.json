@@ -11,17 +11,18 @@
   },
   "default_locale": "en",
   "background": {
-    "page": "src/bg/background.html",
+    "scripts": ["js/jquery/jquery.js", "js/script.js"],
     "persistent": true
   },
   "options_page": "src/options/index.html",
   "page_action": {
     "default_icon": "icons/icon19.png",
     "default_title": "page action demo",
-    "default_popup": "src/page_action/page_action.html"
+    "default_popup": "src/options/index.html"
   },
   "permissions": [
     "https://youtube.com/*",
+    "contextMenus",
 	"storage"
   ],
   "content_scripts": [
@@ -33,14 +34,6 @@
         "src/inject/inject.css"
       ],
 	 "js": [
-        "src/inject/inject.js"
-      ]
-    },
-    {
-      "matches": [
-        "https://www.google.com/*"
-      ],
-      "js": [
         "src/inject/inject.js"
       ]
     }
