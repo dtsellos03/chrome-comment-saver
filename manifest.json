@@ -5,20 +5,16 @@
   "description": "Adds a button next to Youtube Comments to save them",
   "homepage_url": "https://www.google.com",
   "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
+  "128": "icons/icon128.png"
   },
   "default_locale": "en",
   "background": {
     "scripts": ["js/jquery/jquery.js", "js/script.js"],
     "persistent": true
   },
-  "options_page": "src/options/index.html",
-  "page_action": {
-    "default_icon": "icons/icon19.png",
-    "default_title": "page action demo",
-    "default_popup": "src/options/index.html"
+  "browser_action": {
+    "default_title": "Saved Comments",      // optional; shown in tooltip
+    "default_popup": "src/saved_comments/index.html"        // optional
   },
   "permissions": [
     "https://youtube.com/*",
