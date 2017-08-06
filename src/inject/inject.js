@@ -15,7 +15,7 @@ var addButton = function(comment) {
   parent = comment.parentElement;
 
   next = parent.nextSibling,
-    button = document.createElement("button");
+  button = document.createElement("button");
   button.className = "buttonInj";
   text = document.createTextNode("save");
   button.appendChild(text);
@@ -92,4 +92,5 @@ function getVideoID() {
     return video_id;
   }
   return video_id;
+
 }
